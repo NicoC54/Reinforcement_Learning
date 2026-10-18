@@ -17,7 +17,7 @@ class DronePhysics:
         self.state = np.zeros(13, dtype=np.float64)
         self.state[6] = 1.0  # qw = 1 (quaternion identité, drone à plat)
 
-        # 3. Matrice de mixage (Config X, Repère FRD)
+        # 3. Matrice de mixage (Config X, Repère FRD) (respectivement ordre des moteurs : 1 : bas_droit,2 : haut_droit, 3 : bas_gauche, 4 : haut_gauche )
         self.M_mix = np.array([
             [-1.0,        -1.0,        -1.0,        -1.0       ], # Force Z
             [-self.d,     -self.d,      self.d,      self.d    ], # Couple Roulis (Roll)
