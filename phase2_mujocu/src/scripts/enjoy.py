@@ -1,23 +1,30 @@
 import os
+import sys
 import time
 import glob
-from drone_env import DroneLandingEnv
 from stable_baselines3 import PPO
+
+# --- 0. CORRECTION DES CHEMINS (Structure du repo) ---
+dossier_script = os.path.dirname(os.path.abspath(__file__))   # Dossier 'scripts'
+dossier_src = os.path.dirname(dossier_script)                 # Dossier 'src'
+sys.path.append(dossier_src)                                  # Permet à Python de trouver 'env'
+
+from env.drone_env import DroneLandingEnv                     # Import correct
 
 print("Chargement de l'environnement...")
 env = DroneLandingEnv()
 
-# --- 1. CHARGEMENT AUTOMATIQUE DU MODÈLE ---
-dossier_script = os.path.dirname(os.path.abspath(__file__))
-fichiers_zip = glob.glob(os.path.join(dossier_script, "*.zip"))
+# --- 1. CHARGEMENT AUTOMATIQUE DU MODÈLE DEPUIS LE DOSSIER 'models' ---
+dossier_modeles = os.path.join(dossier_src, "models")         # On pointe vers src/models/
+fichiers_zip = glob.glob(os.path.join(dossier_modeles, "*.zip"))
 
 if not fichiers_zip:
-    raise FileNotFoundError("Aucun fichier modèle (.zip) trouvé dans le dossier !")
+    raise FileNotFoundError(f"Aucun fichier modèle (.zip) trouvé dans le dossier : {dossier_modeles} !")
 
 chemin_modele_recent = max(fichiers_zip, key=os.path.getctime)
 print(f"Chargement automatique du cerveau le plus récent : {chemin_modele_recent}")
 
-model = PPO.load(chemin_modele_recent)
+model = PPO.load(chemin_modele_recent, env=env)
 
 # --- 2. BOUCLE DE SIMULATION VISUELLE ---
 obs, info = env.reset()

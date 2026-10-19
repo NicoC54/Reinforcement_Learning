@@ -3,8 +3,10 @@ import mujoco
 import mujoco.viewer
 import time
 
-dossier_script = os.path.dirname(os.path.abspath(__file__))
-chemin_xml = os.path.join(dossier_script, "xmls", "final.xml")
+# --- CORRECTION DU CHEMIN DU XML ---
+dossier_script = os.path.dirname(os.path.abspath(__file__))   # Dossier 'scripts'
+dossier_src = os.path.dirname(dossier_script)                 # Dossier 'src'
+chemin_xml = os.path.join(dossier_src, "xmls", "final.xml")   # Pointe vers src/xmls/final.xml
 
 model = mujoco.MjModel.from_xml_path(chemin_xml)
 data = mujoco.MjData(model)
@@ -46,7 +48,6 @@ with mujoco.viewer.launch_passive(model, data) as viewer:
     while viewer.is_running():
         
         # On allume les 4 moteurs en même temps (ici à 0.5)
-        # data.ctrl[:] permet d'appliquer la valeur à tout le tableau d'un coup
         data.ctrl[:] = 0.5 
         
         mujoco.mj_step(model, data)

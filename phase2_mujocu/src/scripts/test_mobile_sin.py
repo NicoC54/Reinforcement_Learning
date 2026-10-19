@@ -1,15 +1,23 @@
 import os
+import sys
 import time
 import numpy as np
-from drone_env import DroneLandingEnv
 from stable_baselines3 import PPO
+
+# --- CORRECTION DES CHEMINS (Structure du repo) ---
+dossier_script = os.path.dirname(os.path.abspath(__file__))   # Dossier 'scripts'
+dossier_src = os.path.dirname(dossier_script)                 # Dossier 'src'
+sys.path.append(dossier_src)                                  # Permet à Python de trouver 'env'
+
+from env.drone_env import DroneLandingEnv                     # Import correct
 
 # 1. Chargement de l'environnement
 env = DroneLandingEnv()
 
-# 2. Chargement du modèle ultra-robuste v2
-dossier_script = os.path.dirname(os.path.abspath(__file__))
-chemin_modele = os.path.join(dossier_script, "ppo_drone_v2_robust.zip")
+# 2. Chargement du modèle depuis le dossier 'models/'
+dossier_modeles = os.path.join(dossier_src, "models")
+nom_modele = "ppo_drone_v3_smooth" 
+chemin_modele = os.path.join(dossier_modeles, f"{nom_modele}.zip")
 
 print(f"Chargement du modèle : {chemin_modele}")
 model = PPO.load(chemin_modele)
@@ -20,7 +28,7 @@ succes = 0
 scores = []
 temps_vol = []
 
-print(f"\n--- Début du test sur {N_EPISODES} atterrissages mobiles ---\n")
+print(f"\n--- Début du test sur {N_EPISODES} atterrissages mobiles sinusoïdaux ---\n")
 
 try:
     for ep in range(1, N_EPISODES + 1):
@@ -54,7 +62,7 @@ try:
         temps_vol.append(duree_sec)
         
         # Validation du succès selon le score
-        if score_episode > 200:
+        if score_episode > 500:
             succes += 1
             print(f"Épisode {ep:02d}/{N_EPISODES} : RÉUSSI   | Score: {score_episode:4.0f} | Temps: {duree_sec:.2f}s")
         else:
