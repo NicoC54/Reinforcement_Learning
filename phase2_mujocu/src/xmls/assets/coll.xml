@@ -67,5 +67,4 @@
         <mesh name="BR_wheel" file="BR_wheel.STL" />
 
     </asset>
-   
 </mujocoinclude>
