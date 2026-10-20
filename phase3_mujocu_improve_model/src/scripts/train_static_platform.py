@@ -57,7 +57,8 @@ print("Initialisation de l'agent PPO...")
 model = PPO(
     policy="MlpPolicy",
     env=env,
-    learning_rate=1e-4,
+    learning_rate=2e-4,
+    ent_coef=0.02,
     n_steps=2048,
     batch_size=64,
     gamma=0.99,
@@ -83,7 +84,10 @@ finally:
     chemin_sauvegarde = os.path.join(dossier_modeles, "Precise_landing_Static_platform")
     model.save(chemin_sauvegarde)
     
+    # SB3 nomme TOUJOURS ce fichier 'best_model.zip'
+    chemin_vrai_best_model = os.path.join(dossier_best_model, "best_model.zip")
+    
     print(f"\n✅ Sauvegarde terminée !")
     print(f"📍 Modèle à la dernière étape : {chemin_sauvegarde}.zip")
-    print(f"🏆 Meilleur modèle historique : {os.path.join(dossier_best_model, 'best_model.zip')}")  # 👈 NOUVEAU
+    print(f"🏆 Meilleur modèle historique : {chemin_vrai_best_model}")
     print(f"📊 Suivi TensorBoard : tensorboard --logdir={dossier_logs}")
