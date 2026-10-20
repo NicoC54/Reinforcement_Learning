@@ -1,0 +1,38 @@
+<mujoco model="drone-v1">
+    <include file="scenes/scene.xml"/>
+    <include file="assets/coll.xml"/>
+    <compiler meshdir="meshes/"/>
+    <worldbody>
+    <camera name="Main_fixed_cam" pos="7 0 1" xyaxes="0 1 0 -0.1 0 1" />
+        <body name="drone_frame" pos="-1.5 0 2">
+
+            <camera name="Tracking_com" mode="trackcom" pos="-2.5 0 1.6" xyaxes="0 -1 0 0.6 0 1"/>
+        <!-- REMPLACEZ VOS 6 JOINTS PAR CECI : -->
+            <freejoint name="drone_root"/>
+            <include file="assets/body.xml"/>
+            
+        </body>
+
+        <body name="car_frame" pos="0 0 0">
+            <joint name="Tx_car" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-10 100"/>
+            <joint name="Ty_car" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-10 100"/>
+            <joint name="Tz_car" pos="0 0 0" axis="0 0 1" limited="true" type="slide" range="-10 100"/>
+            <joint name="Rx_car" pos="0 0 0" axis="1 0 0" limited="true" range="-20 20"/>
+            <joint name="Ry_car" pos="0 0 0" axis="0 1 0" limited="true" range="-20 20"/>
+            <joint name="Rz_car" pos="0 0 0" axis="0 0 1" limited="true" range="-20 100"/>
+            <include file="assets/body2.xml"/>
+        </body>
+        
+
+    </worldbody>
+
+    <actuator>
+       
+        <motor name="thrust_fl" site="thrust_site_fl" gear="0 -1.5 0 0 0 0" ctrlrange="0 1" ctrllimited="true"/>
+        <motor name="thrust_fr" site="thrust_site_fr" gear="0 -1.5 0 0 0 0" ctrlrange="0 1" ctrllimited="true"/>
+        <motor name="thrust_bl" site="thrust_site_bl" gear="0 -1.5 0 0 0 0" ctrlrange="0 1" ctrllimited="true"/>
+        <motor name="thrust_br" site="thrust_site_br" gear="0 -1.5 0 0 0 0" ctrlrange="0 1" ctrllimited="true"/>
+
+    </actuator>
+
+</mujoco>
