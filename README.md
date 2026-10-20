@@ -180,8 +180,6 @@ The agent successfully converges toward a stable optimal reward score of 1000, e
 
 Leveraging transfer learning, the agent adapts to sinusoidal moving targets, successfully recovering from trajectory variations and achieving robust landing behaviors.
 
-
-
-<br> targets, successfully recovering from trajectory variations and achieving robust landing behaviors.
+<br> 
 <img src="Training_stats_mobile_platform.png" width="700">
 <br><br>
