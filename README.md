@@ -1,0 +1,165 @@
+Voici le **README.md** complet, global et ultra-professionnel, intégrant toute la structure de ton projet (de la théorie sous NumPy avec les phases 1 et 2 jusqu'au fine-tuning sur plateforme mobile sous MuJoCo, avec les graphiques de performances) :
+
+```markdown
+# 🚁 Drone Precision Landing on a Dynamic Mobile Platform using Deep Reinforcement Learning (PPO)
+
+This project implements a complete Deep Reinforcement Learning framework to train and fine-tune an autonomous quadrotor drone capable of performing high-precision landings on a moving, dynamic platform within a MuJoCo physics simulation.
+
+---
+
+## 🚀 Project Architecture & Roadmap
+
+The project is structured into three progressive development phases, transitioning from theoretical physics validation to industrial simulation and robust deployment:
+
+1. **Phase 1: Theoretical Foundations (`phase1_theory/`)**
+   - Custom 3D physics engine built purely in NumPy (Newton-Euler equations, PFD, TDM, Runge-Kutta 4 integrator, and quaternion kinematics).
+   - Validation through a custom 3D Matplotlib visualizer and a basic hover control environment.
+
+2. **Phase 2: Industrial Physics & MuJoCo Simulation (`xmls/` & environments)**
+   - Integration of MuJoCo physics engine via XML markup (`scene.xml`) for accurate contact dynamics, friction, and rigid body collisions.
+   - Design of a custom Gymnasium environment (`DroneLandingEnv`) featuring stochastic mobile platforms (Ornstein-Uhlenbeck processes) and advanced reward shaping (approach cones).
+
+3. **Phase 3: Fine-Tuning, Curriculum Learning & Robustness (`phase3_mujocu_improve_model/`)**
+   - Transfer learning using pre-trained static baseline models.
+   - Advanced fine-tuning via Stable-Baselines3 (PPO) with custom evaluation and checkpoint callbacks (`EvalCallback`, `CheckpointCallback`).
+   - Domain randomization and variable platform velocities to ensure real-world robustness.
+
+---
+
+## 🏗️ Project File Structure
+
+```text
+Reinforcement_Learning/
+│
+├── documentation/                      # Performance analysis charts & documentation
+│   ├── Training_stats_static_platform.png
+│   └── Training_stats_mobile.png
+│
+├── phase1_theory/                      # Phase 1: Custom NumPy physics & visualizer
+│   ├── drone_physics.py
+│   └── visualizer.py
+│
+├── xmls/                               # MuJoCo XML physical models (drone & cart)
+│   └── scene.xml
+│
+├── phase3_mujocu_improve_model/        # Phase 3: Advanced Mobile Landing & PPO Fine-Tuning
+│   │
+│   ├── src/
+│   │   ├── env/                        
+│   │   │   └── drone_env_mobile_platform.py # Custom MuJoCo mobile landing environment
+│   │   ├── models_mobile/              # Saved model weights & checkpoints
+│   │   │   ├── best_model.zip
+│   │   │   └── best_model_mobile_platform.zip
+│   │   ├── tb_logs_mobile/             # TensorBoard training logs
+│   │   └── scripts/                    # Training and evaluation scripts
+│   │       ├── train_mobile_platform.py
+│   │       └── test_best_model_mobile_platform.py
+│   │
+│   └── requirements.txt
+│
+└── README.md
+
+```
+
+---
+
+## 🧠 Environment Specifications (`DroneLandingEnv`)
+
+* **Observation Space (13 dimensions):**
+* Relative position $(X, Y, Z)$ normalized.
+* Relative linear velocity vector.
+* Drone orientation (Quaternion: $w, x, y, z$).
+* Drone angular velocities.
+
+
+* **Action Space (4 dimensions):**
+* Continuous motor thrust commands for the four rotors.
+
+
+* **Dynamic Target:**
+* The platform starts at randomized positions and moves along unpredictable 2D sinusoidal trajectories with varying amplitudes, frequencies, and phases.
+
+
+* **Precision Success Criteria:**
+* **Horizontal Distance (`dist_xy`):** $< 0.10\text{ m}$ (center alignment).
+* **Vertical Distance (`dist_z`):** $< 0.05\text{ m}$.
+* **Relative Velocity (`vitesse_relative_norme`):** $< 0.20\text{ m/s}$ (soft touchdown).
+* **Orientation Alignment (`z_alignement`):** $> 0.90$.
+
+
+
+---
+
+## 💻 Installation & Prerequisites
+
+1. Clone the repository and navigate to the project directory.
+2. Create and activate a Python virtual environment:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+
+```
+
+
+3. Install the required dependencies:
+```bash
+pip install gymnasium mujoco stable-baselines3 numpy matplotlib
+
+```
+
+
+
+---
+
+## 🏃‍♂️ Usage & Execution
+
+### 1. Training / Fine-Tuning on Mobile Platform
+
+To run fine-tuning on top of the pre-trained static model with strict precision metrics and custom callbacks:
+
+```bash
+cd phase3_mujocu_improve_model/src/scripts
+python3 train_mobile_platform.py
+
+```
+
+### 2. Testing & Visualization
+
+To launch the interactive MuJoCo passive viewer and test the best-performing mobile landing model over multiple evaluation episodes:
+
+```bash
+python3 test_best_model_mobile_platform.py
+
+```
+
+### 3. Monitoring Training via TensorBoard
+
+To inspect reward convergence and episode length metrics:
+
+```bash
+tensorboard --logdir=phase3_mujocu_improve_model/src/tb_logs_mobile
+
+```
+
+---
+
+## 📊 Performance & Results Analysis
+
+* **Average Reward:** $\approx 1017.11 \pm 5.20$ during evaluation phases, validating consistent success across randomized dynamic trajectories.
+* **Robustness:** The agent successfully generalizes to variable platform velocities without overfitting to specific trajectory paths.
+
+### Training Evolution Curves
+
+#### 1. Static Platform Baseline Training
+
+The agent successfully converges toward a stable optimal reward score of 1000, establishing a solid baseline policy for precision landing.
+
+
+#### 2. Dynamic Mobile Platform Fine-Tuning
+
+Leveraging transfer learning, the agent adapts to sinusoidal moving targets, successfully recovering from trajectory variations and achieving robust landing behaviors.
+
+
+```
+
+```
