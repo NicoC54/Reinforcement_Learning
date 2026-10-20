@@ -9,9 +9,11 @@ class DroneLandingEnv(gym.Env):
     Étape 1 : Plateforme immobile à l'origine (0, 0).
     Le drone apparaît dans un volume restreint autour de la plateforme.
     """
-    def __init__(self):
+    def __init__(self,render_mode = None):
         super().__init__()
-        
+
+        self.render_mode = render_mode
+
         # 1. Chargement de la physique
         dossier_env = os.path.dirname(os.path.abspath(__file__))
         dossier_src = os.path.dirname(dossier_env)
