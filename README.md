@@ -73,46 +73,43 @@ Reinforcement_Learning/
 ## 🧠 Environment Specifications (`DroneLandingEnv`)
 
 * **Observation Space (13 dimensions):**
-* Relative position $(X, Y, Z)$ normalized.
+  * Relative position $(X, Y, Z)$ normalized.
 
 
-* Relative linear velocity vector.
+  * Relative linear velocity vector.
 
 
-* Drone orientation (Quaternion: $w, x, y, z$).
+  * Drone orientation (Quaternion: $w, x, y, z$).
 
 
-* Drone angular velocities.
+  * Drone angular velocities.
 
 
 
 
 * **Action Space (4 dimensions):**
-* Continuous motor thrust commands for the four rotors.
+  * Continuous motor thrust commands for the four rotors.
 
 
 
 
-* **Dynamic Target:**
-* The platform starts at randomized positions and moves along unpredictable 2D sinusoidal trajectories with varying amplitudes, frequencies, and phases.
+  * **Dynamic Target:**
+  * The platform starts at randomized positions and moves along unpredictable 2D sinusoidal trajectories with varying amplitudes, frequencies, and phases.
 
 
 
 
-* **Precision Success Criteria:**
-* **Horizontal Distance (`dist_xy`):** $< 0.10\text{ m}$ (center alignment).
+  * **Precision Success Criteria:**
+  * **Horizontal Distance (`dist_xy`):** $< 0.10\text{ m}$ (center alignment).
 
 
-* **Vertical Distance (`dist_z`):** $< 0.05\text{ m}$.
+  * **Vertical Distance (`dist_z`):** $< 0.05\text{ m}$.
 
 
-* **Relative Velocity (`vitesse_relative_norme`):** $< 0.20\text{ m/s}$ (soft touchdown).
+  * **Relative Velocity (`vitesse_relative_norme`):** $< 0.20\text{ m/s}$ (soft touchdown).
 
 
-* **Orientation Alignment (`z_alignement`):** $> 0.90$.
-
-
-
+  * **Orientation Alignment (`z_alignement`):** $> 0.90$.
 
 
 ---
@@ -150,13 +147,27 @@ python3 train_mobile_platform.py
 
 ```
 
+NB: If you want the static training:
+
+```bash
+cd phase3_mujocu_improve_model/src/scripts
+python3 train_static_platform.py
+
+```
+
 ### 2. Testing & Visualization
 
-To launch the interactive MuJoCo passive viewer and test the best-performing mobile landing model over multiple evaluation episodes:
+To launch the interactive MuJoCo passive viewer and test the best-performing mobile landing model over multiple evaluation episodes (you can already use the last one I trained):
+
 
 ```bash
 python3 test_best_model_mobile_platform.py
 
+```
+NB: If you want the static test : 
+
+```bash
+python3 test_best_model_static_platform.py
 ```
 
 ### 3. Monitoring Training via TensorBoard
