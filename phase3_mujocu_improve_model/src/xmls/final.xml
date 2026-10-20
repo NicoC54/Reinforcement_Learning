@@ -16,10 +16,6 @@
         <body name="car_frame" pos="0 0 0">
             <joint name="Tx_car" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-10 100"/>
             <joint name="Ty_car" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-10 100"/>
-            <joint name="Tz_car" pos="0 0 0" axis="0 0 1" limited="true" type="slide" range="-10 100"/>
-            <joint name="Rx_car" pos="0 0 0" axis="1 0 0" limited="true" range="-20 20"/>
-            <joint name="Ry_car" pos="0 0 0" axis="0 1 0" limited="true" range="-20 20"/>
-            <joint name="Rz_car" pos="0 0 0" axis="0 0 1" limited="true" range="-20 100"/>
             <include file="assets/body2.xml"/>
         </body>
         
