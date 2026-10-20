@@ -3,14 +3,21 @@
 This project implements a complete Deep Reinforcement Learning framework to train and fine-tune an autonomous quadrotor drone capable of performing high-precision landings on a moving, dynamic platform within a MuJoCo physics simulation.
 
 <br>
-<p align="center" style="display: flex; justify-content: center; gap: 20px;">
-  <img src="static.gif" width="45%" alt="Static Platform Landing">
-  <img src="mobile.gif" width="45%" alt="Dynamic Mobile Platform Landing">
-</p>
 <p align="center">
-  <em>Visual Demonstration: Left (Static Platform Landing) | Right (Dynamic Mobile Platform Landing)</em>
+  <img src="static.gif" width="1000" alt="Static Platform Landing">
+  <br>
+  <em>Demonstration 1: Autonomous landing on a Static Platform</em>
 </p>
 <br>
+
+<p align="center">
+  <img src="mobile.gif" width="1000" alt="Dynamic Mobile Platform Landing">
+  <br>
+  <em>Demonstration 2: Autonomous landing on a Dynamic Mobile Platform</em>
+</p>
+<br>
+
+---
 
 
 
