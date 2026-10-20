@@ -152,6 +152,7 @@ class DroneLandingEnv(gym.Env):
         # Alignement vertical
         quat = self.data.joint("drone_root").qpos[3:7]
         w, x, y, z = quat[0], quat[1], quat[2], quat[3]
+        # Permet d'obtenir l'angle formé par le cumul du roll et pitch, servira plus tard à appliquer une pénalité si le drone penche trop.
         z_alignement = 1.0 - 2.0 * (x**2 + y**2)
         
         # --- REWARD SHAPING ANTI-ACROBATIE ---
@@ -161,13 +162,13 @@ class DroneLandingEnv(gym.Env):
         reward = 0.0
         reward += progres * 10.0
         
-        # 1. Tolérance Zéro sur le Tilt (Exige un vol à plat)
+        # 1. Tolérance Zéro sur le Tilt (Exige un vol à plat) / application dun carré pour que la pénalité deviennen exponentielle
         reward -= ((1.0 - z_alignement) ** 2) * 15.0
         
-        # 2. Interdiction des rotations rapides (Anti-Flip)
+        # 2. Interdiction des rotations rapides (Anti-Flip) / de même ici sur les vitesses angulaires
         reward -= 0.1 * np.sum(np.square(vel_ang_drone))
         
-        # 3. Lissage des moteurs (Anti Bang-Bang)
+        # 3. Lissage des moteurs // application d'une pénalité sur une variation trop importante des moteurs qui entrainerait des discontinuités
         delta_action = action - self.last_action
         reward -= 0.2 * np.sum(np.square(delta_action))
         self.last_action = np.copy(action)
