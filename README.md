@@ -34,8 +34,8 @@ The project is structured into three progressive development phases, transitioni
    - First successful steps with static landing environments and Gymnasium wrappers.
 
 3. **Phase 3: Fine-Tuning, Curriculum Learning & Robustness (`phase3_mujocu_improve_model/`)**
-   - Transfer learning using pre-trained static baseline models[cite: 1, 2].
-   - Advanced fine-tuning via Stable-Baselines3 (PPO) with custom evaluation and checkpoint callbacks (`EvalCallback`, `CheckpointCallback`)[cite: 1].
+   - Transfer learning using pre-trained static baseline models.
+   - Advanced fine-tuning via Stable-Baselines3 (PPO) with custom evaluation and checkpoint callbacks (`EvalCallback`, `CheckpointCallback`).
    - Domain randomization and variable platform velocities to ensure real-world robustness.
 
 ---
